@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -59,8 +60,8 @@ func (api *Api) userGetItemsHandler(res http.ResponseWriter, req *http.Request) 
 
 func main() {
 	// Env
-	port := "4242"
-	mongo_host := "mongo"
+	port := os.Getenv("PORT")
+	mongo_host := os.Getenv("MONGO_HOST")
 
 	api := Api{}
 
