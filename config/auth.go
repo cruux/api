@@ -3,8 +3,8 @@ package config
 import (
 	"crypto/rsa"
 	"encoding/base64"
-	"log"
 
+	"github.com/cruux/api/utils"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
@@ -13,22 +13,16 @@ var (
 	JwtPrivateKey *rsa.PrivateKey
 )
 
-func fatal(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func initAuth() {
 	privateBytes, err := base64.StdEncoding.DecodeString(Env["JWT_PRIVATE_KEY"])
-	fatal(err)
+	utils.Fatal(err)
 
 	JwtPrivateKey, err = jwt.ParseRSAPrivateKeyFromPEM(privateBytes)
-	fatal(err)
+	utils.Fatal(err)
 
 	publicBytes, err := base64.StdEncoding.DecodeString(Env["JWT_PUBLIC_KEY"])
-	fatal(err)
+	utils.Fatal(err)
 
 	JwtPublicKey, err = jwt.ParseRSAPublicKeyFromPEM(publicBytes)
-	fatal(err)
+	utils.Fatal(err)
 }
